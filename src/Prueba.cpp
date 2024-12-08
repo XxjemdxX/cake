@@ -30,7 +30,8 @@ int main()
             man1.right();
             man1.move(velocidad, 0);
         }
-
+        else
+            man1.stayd();
         
         window.clear();
         man1.draw(window);
