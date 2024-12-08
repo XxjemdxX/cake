@@ -35,8 +35,8 @@ public:
         // Actualizar el frame de la animación
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame + 1) % 6;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 180)+24, 60, 17, 30));
+            currentFrame = (currentFrame + 1) % 17;
+            sprite.setTextureRect(sf::IntRect((currentFrame * 56.4)+2, 194, 33, 38));
             clock.restart();
         }
     }
@@ -44,8 +44,8 @@ public:
         // Actualizar el frame de la animación
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame + 1) % 6;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 180)+13, 60, 17, 30));
+            currentFrame = (currentFrame - 1) % 17;
+            sprite.setTextureRect(sf::IntRect((currentFrame * 48.3)+966, 347, 33, 38));
             clock.restart();
         }
     }
@@ -53,8 +53,8 @@ public:
         // Actualizar el frame de la animación
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame + 1) % 7;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 42.75)+183, 30, 37, 38));
+            currentFrame = (currentFrame + 1) % 11;
+            sprite.setTextureRect(sf::IntRect((currentFrame * 33.9)+7, 21, 35, 38));
             clock.restart();
         }
     }
