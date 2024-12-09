@@ -1,60 +1,87 @@
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 
 class Changolion
 {
 public:
     Changolion(sf::Vector2f position, sf::Color color)
     {
-        shape.setSize(sf::Vector2f(0, 0));
-        shape.setPosition(position); // Posición inicial cuadro
+        shape.setSize(sf::Vector2f(17, 17)); // Tamaño inicial del rectángulo
+        shape.setPosition(position);         // Posición inicial del rectángulo
         shape.setFillColor(color);
 
-        // Cargar la imagen desde un archivo
-        
-        if (!texture.loadFromFile("assets/images/Donkey_Kong.png"))
+        // Cargar la textura desde un archivo
+        if (!texture.loadFromFile("assets/images/arcade_2.png"))
         {
-        
+            throw std::runtime_error("No se pudo cargar la textura arcade_2.png");
         }
+
         this->sprite = sf::Sprite(texture);
-        this->sprite.setPosition(position); // Posición inicial sprite
+        this->sprite.setPosition(position); // Posición inicial del sprite
     }
 
     void move(float offsetX, float offsetY)
     {
-        sprite.move(offsetX, offsetY);
-        shape.move(offsetX, offsetY);
+        sprite.move(offsetX, offsetY); // Mover el sprite
+        shape.move(offsetX, offsetY);  // Sincronizar el rectángulo
     }
 
     void draw(sf::RenderWindow &window)
     {
-        window.draw(this->shape);
-        window.draw(this->sprite);
+        window.draw(this->shape);  // Dibujar el rectángulo
+        window.draw(this->sprite); // Dibujar el sprite
     }
 
-    void right(){
-        // Actualizar el frame de la animación
+    sf::Vector2f getPosition() const
+    {
+        return sprite.getPosition(); // Devuelve la posición del sprite
+    }
+
+    void setPosition(float x, float y)
+    {
+        sprite.setPosition(x, y); // Ajustar la posición del sprite
+        shape.setPosition(x, y);  // Sincronizar el rectángulo
+    }
+
+    void right()
+    {
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame + 1) % 17;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 56.4)+2, 194, 33, 38));
+            currentFrame = (currentFrame + 1) % 3;
+            sprite.setTextureRect(sf::IntRect((currentFrame * 21) + 46, 67, 17, 17));
             clock.restart();
         }
     }
-    void left(){
-        // Actualizar el frame de la animación
+
+    void left()
+    {
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame - 1) % 17;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 48.3)+966, 347, 33, 38));
+            currentFrame = (currentFrame + 1) % 3;
+            sprite.setTextureRect(sf::IntRect((currentFrame * 21) + 65, 22, 17, 17));
             clock.restart();
         }
     }
-    void stayd(){
-        // Actualizar el frame de la animación
+
+    void stayd()
+    {
         if (clock.getElapsedTime().asSeconds() >= frameTime)
         {
-            currentFrame = (currentFrame + 1) % 11;
-            sprite.setTextureRect(sf::IntRect((currentFrame * 33.9)+7, 21, 35, 38));
+            currentFrame = 0; // Estado inactivo no necesita cambiar frames
+            sprite.setTextureRect(sf::IntRect(96, 67, 17, 17));
+            clock.restart();
+        }
+    }
+
+    void jump(float offsetY)
+    {
+        sprite.move(0, offsetY); // Mover en el eje Y
+        shape.move(0, offsetY); // Sincronizar el rectángulo
+
+        // Animación de salto
+        if (clock.getElapsedTime().asSeconds() >= frameTime)
+        {
+            sprite.setTextureRect(sf::IntRect(375, 23, 17, 17)); // Frame específico para salto
             clock.restart();
         }
     }
@@ -64,8 +91,6 @@ private:
     sf::Sprite sprite;
     sf::Texture texture;
     sf::Clock clock;
-    float frameTime = 0.1f; // Tiempo entre cada frame en segundos
+    float frameTime = 0.1f; // Tiempo entre frames de animación
     int currentFrame = 0;
-    int numFrames = 4; // Número total de frames en la animación
-    int frameWidth = 32;
-    int frameHeight = 32;};
+};
