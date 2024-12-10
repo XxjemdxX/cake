@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include <SFML/Audio.hpp> 
 using namespace std;
 
 int main() {
@@ -17,6 +18,17 @@ int main() {
         return -1;
     }
     sf::Sprite fondo(texturaFondo);  // Crear el sprite con la textura
+
+
+    // Cargar la música
+    sf::Music musica;  // Declarar el objeto sf::Music
+    if (!musica.openFromFile("assets/music/Audio.ogg")) // Cargar el archivo de musica
+    {  
+        std::cerr << "Error al cargar la musica." << std::endl;
+        return -1;
+    }
+    musica.setLoop(true);  // Configurar la musica para que se repita en bucle
+    musica.play();         // Reproducir la musica
 
     // Crear un mundo de Box2D
     b2Vec2 vectorGravedad(0.0f, 10.0f); // Gravedad hacia abajo
@@ -40,7 +52,7 @@ int main() {
 
     sf::RectangleShape suelo1(sf::Vector2f(boxWidth1, boxHeight1));
     suelo1.setOrigin(boxWidth1 / 2.0f, boxHeight1 / 2.0f);
-    suelo1.setFillColor(sf::Color::Green); // Color del primer suelo
+    suelo1.setFillColor(sf::Color::Red); // Color del primer suelo
 
     // Crear el segundo suelo
     b2BodyDef cuerpoSuelo2Def;
@@ -60,7 +72,7 @@ int main() {
 
     sf::RectangleShape suelo2(sf::Vector2f(boxWidth2, boxHeight2));
     suelo2.setOrigin(boxWidth2 / 2.0f, boxHeight2 / 2.0f);
-    suelo2.setFillColor(sf::Color::Green); // Color del segundo suelo
+    suelo2.setFillColor(sf::Color::Red); // Color del segundo suelo
 
     // Crear el tercer suelo
     b2BodyDef cuerpoSuelo3Def;
@@ -80,7 +92,7 @@ int main() {
 
     sf::RectangleShape suelo3(sf::Vector2f(boxWidth3, boxHeight3));
     suelo3.setOrigin(boxWidth3 / 2.0f, boxHeight3 / 2.0f);
-    suelo3.setFillColor(sf::Color::Green); // Color del tercer suelo
+    suelo3.setFillColor(sf::Color::Red); // Color del tercer suelo
 
     // Crear el cuarto suelo
     b2BodyDef cuerpoSuelo4Def;
@@ -100,7 +112,7 @@ int main() {
 
     sf::RectangleShape suelo4(sf::Vector2f(boxWidth4, boxHeight4));
     suelo4.setOrigin(boxWidth4 / 2.0f, boxHeight4 / 2.0f);
-    suelo4.setFillColor(sf::Color::Green); // Color del cuarto suelo
+    suelo4.setFillColor(sf::Color::Red); // Color del cuarto suelo
 
     // Crear el límite izquierdo
     b2BodyDef cuerpoSuelo6Def;
