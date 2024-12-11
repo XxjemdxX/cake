@@ -2,10 +2,11 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 #include <SFML/Audio.hpp> 
-#include <MusicManager.hpp>
-#include <PlatformManager.hpp>
-#include <BallManager.hpp>
-#include <BackgroundManager.hpp>
+
+#include <Musica.hpp>
+#include <Plataforma.hpp>
+#include <BolaDinamica.hpp>
+#include <Fondo.hpp>
 
 using namespace std;
 
@@ -16,10 +17,10 @@ int main() {
     sf::RenderWindow ventana(sf::VideoMode(800, 600), "Ejemplo de Física con Box2D y SFML");
 
     // Manejar el fondo utilizando BackgroundManager
-    BackgroundManager fondo("assets/images/Cielo.png");
+    Fondo fondo("assets/images/Cielo.png");
 
     // Manejar la música utilizando MusicManager
-    MusicManager musicManager("assets/music/Audio.ogg");
+    Musica musicManager("assets/music/Audio.ogg");
     musicManager.play();
 
     // Crear un mundo de Box2D
@@ -27,15 +28,16 @@ int main() {
     b2World mundo(vectorGravedad);
 
     // Crear plataformas
-    PlatformManager plataforma1(mundo, {0.0f, 500.0f}, {300.0f, -10.0f}, 0.0f, sf::Color::Red);
-    PlatformManager plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
-    PlatformManager plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
-    PlatformManager plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
-    PlatformManager limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
-    PlatformManager limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
+    Plataforma plataforma1(mundo, {0.0f, 500.0f}, {300.0f, -10.0f}, 0.0f, sf::Color::Red);
+    Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
+    Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
+    Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
 
     // Crear la bola
-    BallManager bola(mundo, {400.0f, 100.0f}, 25.0f, 0.01f, 0.7f, sf::Color::Red);
+    BolaDinamica bola(mundo, {100.0f, 100.0f}, 15.0f, 0.01f, 0.7f, sf::Color::Red);
 
     // Bucle principal del juego
     while (ventana.isOpen()) {
@@ -60,6 +62,7 @@ int main() {
         plataforma2.draw(ventana);
         plataforma3.draw(ventana);
         plataforma4.draw(ventana);
+        plataforma5.draw(ventana);
         limiteIzquierdo.draw(ventana);
         limiteDerecho.draw(ventana);
 

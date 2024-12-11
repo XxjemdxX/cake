@@ -4,9 +4,9 @@
 
 using namespace std;
 
-class MusicManager {
+class Musica {
 public:
-    MusicManager(const std::string& filepath) {
+    Musica(const std::string& filepath) {
         if (!musica.openFromFile(filepath)) {
             std::cerr << "Error al cargar la musica desde " << filepath << std::endl;
             exit(-1);

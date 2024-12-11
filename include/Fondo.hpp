@@ -2,9 +2,9 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 using namespace std;
-class BackgroundManager {
+class Fondo {
 public:
-    BackgroundManager(const std::string& filepath) {
+    Fondo(const std::string& filepath) {
         if (!texture.loadFromFile(filepath)) {
             std::cerr << "Error al cargar la imagen de fondo desde " << filepath << std::endl;
             exit(-1);

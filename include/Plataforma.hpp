@@ -3,9 +3,9 @@
 #include <iostream>
 using namespace std;
 
-class PlatformManager {
+class Plataforma {
 public:
-    PlatformManager(b2World& world, const sf::Vector2f& position, const sf::Vector2f& size, float angle, const sf::Color& color) {
+    Plataforma(b2World& world, const sf::Vector2f& position, const sf::Vector2f& size, float angle, const sf::Color& color) {
         b2BodyDef bodyDef;
         bodyDef.position.Set(position.x, position.y);
         bodyDef.angle = angle * (b2_pi / 180.0f);

@@ -3,9 +3,9 @@
 #include <iostream>
 using namespace std;
 
-class BallManager {
+class BolaDinamica {
 public:
-    BallManager(b2World& world, const sf::Vector2f& position, float radius, float density, float friction, const sf::Color& color)
+    BolaDinamica(b2World& world, const sf::Vector2f& position, float radius, float density, float friction, const sf::Color& color)
         : radius(radius), color(color) {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
