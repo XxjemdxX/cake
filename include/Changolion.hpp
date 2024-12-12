@@ -6,7 +6,7 @@ class Changolion {
 public:
     // Constructor que toma el mundo de Box2D, la posición y el color
     Changolion(b2World& world, sf::Vector2f position, sf::Color color)
-        : radius(0.5f), density(1.0f), friction(0.3f), color(color)
+        : radius(0.5f), density(1.0f), friction(0.3f), color(color), initialPosition(position)
     {
         // Crear un cuerpo dinámico para Changolion en el mundo de Box2D
         b2BodyDef bodyDef;
@@ -57,6 +57,26 @@ public:
         return sf::Vector2f(body->GetPosition().x, body->GetPosition().y);
     }
 
+    // Verificar colisión con una bola
+    bool checkCollisionWithBola(const BolaDinamica& bola) {
+        // Suponiendo que la bola tiene un cuerpo físico (Box2D)
+        b2Vec2 changolionPos = body->GetPosition();
+        b2Vec2 bolaPos = bola.getBody()->GetPosition();  // Suponiendo que tienes el cuerpo de la bola
+
+        // Calcular la distancia entre los centros de Changolion y la bola
+        float distancia = (changolionPos - bolaPos).Length();
+        float radioChangolion = radius;  // Radio del Changolion
+        float radioBola = bola.getRadio();  // Supuesto método getRadio() para obtener el radio de la bola
+
+        // Si la distancia es menor que la suma de los radios, hay una colisión
+        return distancia < (radioChangolion + radioBola);
+    }
+
+    // Resetear la posición de Changolion
+    void resetPosition() {
+        body->SetTransform(b2Vec2(initialPosition.x, initialPosition.y), 0.0f);
+    }
+
 private:
     b2Body* body;  // Cuerpo físico de Box2D
     float radius;   // Radio del cuerpo
@@ -65,4 +85,5 @@ private:
     sf::Color color; // Color del sprite
     sf::Sprite sprite;  // Sprite que se dibuja en la pantalla
     sf::Texture texture; // Textura para el sprite
+    sf::Vector2f initialPosition;  // Posición inicial de Changolion
 };

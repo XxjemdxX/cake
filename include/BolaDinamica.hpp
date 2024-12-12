@@ -26,18 +26,30 @@ public:
         circleShape.setFillColor(color);
     }
 
+    // Método para obtener el cuerpo de la bola
+    b2Body* getBody() const {
+        return body;
+    }
+
+    // Método para obtener el radio de la bola
+    float getRadio() const {
+        return radius;
+    }
+
+    // Método para aplicar un impulso a la bola
     void applyImpulse(const b2Vec2& impulse) {
         body->ApplyLinearImpulse(impulse, body->GetWorldCenter(), true);
     }
 
+    // Método para dibujar la bola en la ventana
     void draw(sf::RenderWindow& window) {
         circleShape.setPosition(body->GetPosition().x, body->GetPosition().y);
         window.draw(circleShape);
     }
 
 private:
-    b2Body* body;
-    float radius;
-    sf::Color color;
-    sf::CircleShape circleShape;
+    b2Body* body;  // Cuerpo de la bola en Box2D
+    float radius;   // Radio de la bola
+    sf::Color color; // Color de la bola
+    sf::CircleShape circleShape; // Forma gráfica de la bola (para dibujarla en la ventana)
 };
