@@ -25,17 +25,15 @@ int main() {
     musicManager.play();
 
     // Crear un mundo de Box2D
-    b2Vec2 vectorGravedad(0.0f, 10.0f);
+    b2Vec2 vectorGravedad(0.0f, 5.0f);
     b2World mundo(vectorGravedad);
 
     // Crear plataformas
-    Plataforma plataforma1(mundo, {0.0f, 500.0f}, {300.0f, -15.0f}, 2.0f, sf::Color::Red);
-    Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
-    Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
-    Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
-    Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
-    Plataforma plataforma6(mundo, {0.0f, 100.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
-
+    Plataforma plataforma1(mundo, {0.0f, 500.0f}, {300.0f, 10.0f}, 0.0f, sf::Color::Red);
+    Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
     Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
     Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
 
@@ -45,74 +43,56 @@ int main() {
     // Crear el personaje Changolion
     Changolion changolion(mundo, {10.0f, 450.0f}, sf::Color::Blue); // Posición inicial de Changolion
 
-    // Bucle principal del juego
-    while (ventana.isOpen()) {
-        // Procesar eventos
-        sf::Event evento;
-        while (ventana.pollEvent(evento)) {
-            if (evento.type == sf::Event::Closed)
-                ventana.close();
-        }
-
-        // Obtener el estado de las teclas
-        bool movingRight = false;
-        bool movingLeft = false;
-        bool isJumping = false;
-
-        // Detectar teclas presionadas
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            movingRight = true;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            movingLeft = true;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            isJumping = true;
-        }
-
-        // Actualizar el mundo de Box2D
-        mundo.Step(1.0f / 60.0f, 6, 2);
-
-        // Actualizar la animación y el movimiento de Changolion
-        if (movingRight) {
-            changolion.right();  // Mover a la derecha
-            changolion.move(5.0f, 0.0f);  // Aplicar una fuerza para mover a la derecha
-        } else if (movingLeft) {
-            changolion.left();  // Mover a la izquierda
-            changolion.move(-5.0f, 0.0f);  // Aplicar una fuerza para mover a la izquierda
-        } else {
-            changolion.stayd();  // Animación de quedarse quieto
-        }
-
-        if (isJumping) {
-            changolion.jump(15.0f);  // Aplicar impulso para el salto
-        }
-
-        // Limpiar la ventana
-        ventana.clear();
-
-        // Dibujar el fondo
-        fondo.draw(ventana);
-
-        // Dibujar las plataformas
-        plataforma1.draw(ventana);
-        plataforma2.draw(ventana);
-        plataforma3.draw(ventana);
-        plataforma4.draw(ventana);
-        plataforma5.draw(ventana);
-        plataforma6.draw(ventana);
-        limiteIzquierdo.draw(ventana);
-        limiteDerecho.draw(ventana);
-
-        // Dibujar la bola
-        bola.draw(ventana);
-
-        // Dibujar Changolion
-        changolion.draw(ventana);
-
-        // Mostrar la ventana
-        ventana.display();
+// Bucle principal del juego
+while (ventana.isOpen()) {
+    // Procesar eventos
+    sf::Event evento;
+    while (ventana.pollEvent(evento)) {
+        if (evento.type == sf::Event::Closed)
+            ventana.close();
     }
 
-    return 0;
+    // Obtener el estado de las teclas
+    bool movingRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    bool movingLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+    bool isJumping = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+
+    // Actualizar el movimiento de Changolion
+    if (movingRight) {
+        changolion.applyForce(b2Vec2(.5f, 0.0f));  // Aplicar una fuerza para mover a la derecha
+    } else if (movingLeft) {
+        changolion.applyForce(b2Vec2(-.5f, 0.0f));  // Aplicar una fuerza para mover a la izquierda
+    }
+
+    if (isJumping) {
+        changolion.jump(.1f);  // Aplicar impulso para el salto
+    }
+
+    // Actualizar el mundo de Box2D
+    mundo.Step(1.0f / 60.0f, 6, 2);
+
+    // Limpiar la ventana
+    ventana.clear();
+
+    // Dibujar el fondo
+    fondo.draw(ventana);
+
+    // Dibujar las plataformas
+    plataforma1.draw(ventana);
+    plataforma2.draw(ventana);
+    plataforma3.draw(ventana);
+    plataforma4.draw(ventana);
+    plataforma5.draw(ventana);
+    limiteIzquierdo.draw(ventana);
+    limiteDerecho.draw(ventana);
+
+    // Dibujar la bola
+    bola.draw(ventana);
+
+    // Dibujar Changolion
+    changolion.draw(ventana);
+
+    // Mostrar la ventana
+    ventana.display();
+}
 }
