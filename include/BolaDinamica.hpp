@@ -7,6 +7,7 @@ class BolaDinamica {
 public:
     BolaDinamica(b2World& world, const sf::Vector2f& position, float radius, float density, float friction, const sf::Color& color)
         : radius(radius), color(color) {
+        // Configuración de Box2D
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(position.x, position.y);
@@ -21,9 +22,16 @@ public:
         fixtureDef.friction = friction;
         body->CreateFixture(&fixtureDef);
 
+        // Configuración de SFML
         circleShape.setRadius(radius);
         circleShape.setOrigin(radius, radius);
-        circleShape.setFillColor(color);
+        circleShape.setFillColor(color); // Opcional, si no se carga una textura.
+    }
+
+    // Método para cargar y aplicar una textura a la pelota
+    bool setTexture(const sf::Texture& texture) {
+        circleShape.setTexture(&texture);
+        return true;
     }
 
     // Método para obtener el cuerpo de la bola
@@ -48,8 +56,8 @@ public:
     }
 
 private:
-    b2Body* body;  // Cuerpo de la bola en Box2D
-    float radius;   // Radio de la bola
-    sf::Color color; // Color de la bola
-    sf::CircleShape circleShape; // Forma gráfica de la bola (para dibujarla en la ventana)
+    b2Body* body;                  // Cuerpo de la bola en Box2D
+    float radius;                  // Radio de la bola
+    sf::Color color;               // Color de la bola
+    sf::CircleShape circleShape;   // Forma gráfica de la bola (para dibujarla en la ventana)
 };

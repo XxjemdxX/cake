@@ -28,29 +28,27 @@ int main() {
     b2Vec2 vectorGravedad(0.0f, 5.0f);
     b2World mundo(vectorGravedad);
 
+    // Cargar la textura para las bolas
+    sf::Texture bolaTexture;
+    if (!bolaTexture.loadFromFile("assets/images/Fuego.png")) {
+        cerr << "Error al cargar la textura de la bola" << endl;
+        return -1;
+    }
+
     // Crear plataformas
     Plataforma plataforma6(mundo, {  0.0f, 100.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
-    Plataforma escudo1(mundo, {  800.0f, 100.0f}, {250.0f, 10.0f}, -25.0f, sf::Color:: Blue);  
-
+    Plataforma escudo1(mundo, {  800.0f, 100.0f}, {300.0f, 10.0f}, -30.0f, sf::Color::Blue);  
     Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
-
     Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
-
     Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
-
     Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
-
     Plataforma plataforma7(mundo, {  0.0f, 500.0f}, {1250.0f, 15.0f}, 3.0f, sf::Color::Red);
-
     Plataforma plataforma1(mundo, {  800.0f, 500.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
-
-
-
     Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
     Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
 
     // Crear el personaje Changolion
-    Changolion changolion(mundo, {750.0f, 450.0f}, sf::Color::Blue); // Posición inicial de Changolion
+    Changolion changolion(mundo, {750.0f, 450.0f}, sf::Color::Blue);
 
     // Temporizador para crear bolas cada cierto tiempo
     sf::Clock relojGeneracion;
@@ -75,26 +73,28 @@ int main() {
 
         // Actualizar el movimiento de Changolion
         if (movingRight) {
-            changolion.applyForce(b2Vec2(.5f, 0.0f));  // Aplicar una fuerza para mover a la derecha
+            changolion.applyForce(b2Vec2(.5f, 0.0f));
         } else if (movingLeft) {
-            changolion.applyForce(b2Vec2(-.5f, 0.0f));  // Aplicar una fuerza para mover a la izquierda
+            changolion.applyForce(b2Vec2(-.5f, 0.0f));
         }
 
         if (isJumping) {
-            changolion.jump(.1f);  // Aplicar impulso para el salto
+            changolion.jump(.1f);
         }
 
         // Generar bolas cada cierto tiempo
         if (relojGeneracion.getElapsedTime().asSeconds() >= intervaloGeneracion) {
             // Crear una bola en una posición aleatoria
-            bolas.push_back(BolaDinamica(mundo, {rand() % 800, 0.0f}, 13.0f, 0.01f, 0.7f, sf::Color::Red));
-            relojGeneracion.restart();  // Reiniciar el temporizador
+            BolaDinamica nuevaBola(mundo, {rand() % 800, 0.0f}, 13.0f, 0.01f, 0.7f, sf::Color::White);
+            nuevaBola.setTexture(bolaTexture); // Aplicar textura a la bola
+            bolas.push_back(nuevaBola);
+            relojGeneracion.restart();
         }
 
         // Comprobar colisiones entre Changolion y las bolas
         for (auto& bola : bolas) {
             if (changolion.checkCollisionWithBola(bola)) {
-                changolion.resetPosition();  // Reaparecer en la posición inicial
+                changolion.resetPosition();
             }
         }
 
@@ -116,8 +116,6 @@ int main() {
         plataforma6.draw(ventana);
         plataforma7.draw(ventana);
         escudo1.draw(ventana);
-
-
         limiteIzquierdo.draw(ventana);
         limiteDerecho.draw(ventana);
 
@@ -132,4 +130,6 @@ int main() {
         // Mostrar la ventana
         ventana.display();
     }
+
+    return 0;
 }
