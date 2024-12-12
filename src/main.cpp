@@ -29,11 +29,13 @@ int main() {
     b2World mundo(vectorGravedad);
 
     // Crear plataformas
-    Plataforma plataforma1(mundo, {0.0f, 500.0f}, {300.0f, -10.0f}, 0.0f, sf::Color::Red);
-    Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
-    Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 10.0f}, -3.0f, sf::Color::Red);
-    Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
-    Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 10.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma1(mundo, {0.0f, 500.0f}, {300.0f, -15.0f}, 2.0f, sf::Color::Red);
+    Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
+    Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma6(mundo, {0.0f, 100.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
+
     Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
     Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
 
@@ -98,6 +100,7 @@ int main() {
         plataforma3.draw(ventana);
         plataforma4.draw(ventana);
         plataforma5.draw(ventana);
+        plataforma6.draw(ventana);
         limiteIzquierdo.draw(ventana);
         limiteDerecho.draw(ventana);
 
