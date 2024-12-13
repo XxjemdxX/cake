@@ -55,7 +55,7 @@ int main() {
 
     // Temporizador para crear bolas cada cierto tiempo
     sf::Clock relojGeneracion;
-    float intervaloGeneracion = 3.0f; // Segundos entre la aparición de bolas
+    float intervaloGeneracion = 1.5f; // Segundos entre la aparición de bolas
 
     // Crear un vector de bolas
     std::vector<BolaDinamica> bolas;
@@ -88,7 +88,7 @@ int main() {
         // Generar bolas cada cierto tiempo
         if (relojGeneracion.getElapsedTime().asSeconds() >= intervaloGeneracion) {
             // Crear una bola en una posición aleatoria
-            BolaDinamica nuevaBola(mundo, {static_cast<float>(rand() % 800), 0.0f}, 13.0f, 0.01f, 0.7f, sf::Color::White);
+            BolaDinamica nuevaBola(mundo, {static_cast<float>(rand() % 800), 0.0f}, 13.0f, 0.01f, 0.0f, sf::Color::White);
             nuevaBola.setTexture(bolaTexture); // Aplicar textura a la bola
             bolas.push_back(nuevaBola);
             relojGeneracion.restart();
