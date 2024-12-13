@@ -36,16 +36,15 @@ int main() {
     }
 
     // Crear plataformas
-    Plataforma plataforma6(mundo, {  0.0f, 100.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
-    Plataforma escudo1(mundo, {  800.0f, 100.0f}, {300.0f, 10.0f}, -30.0f, sf::Color::Blue);  
+
     Plataforma plataforma5(mundo, {100.0f, 100.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
     Plataforma plataforma3(mundo, {600.0f, 200.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
     Plataforma plataforma4(mundo, {100.0f, 300.0f}, {1000.0f, 15.0f}, 3.0f, sf::Color::Red);
     Plataforma plataforma2(mundo, {600.0f, 400.0f}, {1000.0f, 15.0f}, -3.0f, sf::Color::Red);
-    Plataforma plataforma7(mundo, {  0.0f, 500.0f}, {1250.0f, 15.0f}, 3.0f, sf::Color::Red);
+    Plataforma plataforma6(mundo, {  0.0f, 500.0f}, {1250.0f, 15.0f}, 3.0f, sf::Color::Red);
     Plataforma plataforma1(mundo, {  800.0f, 500.0f}, {300.0f, 15.0f}, 0.0f, sf::Color::Red);
-    Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
-    Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {-10.0f, 10000.0f}, 0.0f, sf::Color::Black);
+    Plataforma limiteIzquierdo(mundo, {0.0f, 10.0f}, {10.0f, 10000.0f}, 0.0f, sf::Color::Black);
+    Plataforma limiteDerecho(mundo, {800.0f, 10.0f}, {10.0f, 10000.0f}, 0.0f, sf::Color::Black);
 
     // Crear el personaje Changolion
     Changolion changolion(mundo, {750.0f, 450.0f}, sf::Color::Blue);
@@ -90,6 +89,16 @@ int main() {
             bolas.push_back(nuevaBola);
             relojGeneracion.restart();
         }
+        // Verificar si Changolion ha caído del mapa
+        if (changolion.getPosition().y > 600) {
+            changolion.resetPosition();
+        }
+
+        // Verificar si Changolion ha llegado a la coordenada (50, 50)
+        if (changolion.getPosition().x <= 50.0f && changolion.getPosition().y <= 50.0f) {
+          changolion.resetPosition();
+            break;
+        }
 
         // Comprobar colisiones entre Changolion y las bolas
         for (auto& bola : bolas) {
@@ -114,8 +123,6 @@ int main() {
         plataforma4.draw(ventana);
         plataforma5.draw(ventana);
         plataforma6.draw(ventana);
-        plataforma7.draw(ventana);
-        escudo1.draw(ventana);
         limiteIzquierdo.draw(ventana);
         limiteDerecho.draw(ventana);
 
