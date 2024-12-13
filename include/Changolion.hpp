@@ -20,8 +20,8 @@ public:
         fixtureDef.friction = friction;
         body->CreateFixture(&fixtureDef);
 
-        if (!texture.loadFromFile("assets/images/walk0.png")) {
-            throw std::runtime_error("No se pudo cargar la textura Walk0.png");
+        if (!texture.loadFromFile("assets/images/chango.png")) {
+            throw std::runtime_error("No se pudo cargar la textura chango.png");
         }
 
         sprite.setTexture(texture);

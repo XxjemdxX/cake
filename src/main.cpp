@@ -7,7 +7,9 @@
 #include <Plataforma.hpp>
 #include <BolaDinamica.hpp>
 #include <Fondo.hpp>
-#include <Changolion.hpp> 
+#include <Changolion.hpp>
+#include <bandera.hpp>
+
 
 using namespace std;
 
@@ -48,6 +50,8 @@ int main() {
 
     // Crear el personaje Changolion
     Changolion changolion(mundo, {750.0f, 450.0f}, sf::Color::Blue);
+
+    bandera bandera(mundo, {20.0f, 37.0f}, sf::Color::Blue);
 
     // Temporizador para crear bolas cada cierto tiempo
     sf::Clock relojGeneracion;
@@ -133,6 +137,8 @@ int main() {
 
         // Dibujar Changolion
         changolion.draw(ventana);
+
+        bandera.draw(ventana);
 
         // Mostrar la ventana
         ventana.display();
