@@ -10,6 +10,8 @@ The Adventures of Changolion is a platformer game where you control a character 
 
 ## Controls
 
+
+
 The controls to move Changolion are:
 
 - Up

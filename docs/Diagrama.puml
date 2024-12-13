@@ -1,0 +1,88 @@
+@startuml Diagrama
+class Fondo {
+    + Fondo(filepath: std::string)
+    + draw(window: RenderWindow)
+}
+
+class Musica {
+    + Musica(filepath: std::string)
+    + play()
+    + stop()
+}
+
+class BolaDinamica {
+    - radius: float
+    - color: Color
+    + BolaDinamica(position: Vector2f, radius: float, density: float, friction: float, color: Color)
+    + setTexture(texture: Texture): bool
+    + applyImpulse(impulse: Vector2f)
+    + draw(window: RenderWindow)
+}
+
+class Changolion {
+    - radius: float
+    - density: float
+    - friction: float
+    - color: Color
+    - initialPosition: Vector2f
+    + Changolion(position: Vector2f, color: Color)
+    + applyForce(force: Vector2f)
+    + jump(impulse: float)
+    + draw(window: RenderWindow)
+    + getPosition(): Vector2f
+    + checkCollisionWithBola(bola: BolaDinamica): bool
+    + resetPosition()
+    + isTouchingGround(): bool
+}
+
+class Plataforma {
+    - position: Vector2f
+    - size: Vector2f
+    - angle: float
+    - color: Color
+    + Plataforma(position: Vector2f, size: Vector2f, angle: float, color: Color)
+    + draw(window: RenderWindow)
+}
+
+class Bandera {
+    + Bandera(position: Vector2f, color: Color)
+    + draw(window: RenderWindow)
+}
+
+class Juego {
+    - ventana: RenderWindow
+    - mundo: Mundo
+    - musica: Musica
+    - fondo: Fondo
+    - bolas: List<BolaDinamica>
+    - changolion: Changolion
+    - plataformas: List<Plataforma>
+    - bandera: Bandera
+    + Juego()
+    + ejecutar()
+    + procesarEventos()
+    + actualizar()
+    + generarBolas()
+    + verificarColisiones()
+    + renderizar()
+}
+
+Fondo "1" o-- "1" Texture
+Juego "1" *-- "1" Fondo
+Musica "1" o-- "1" Music 
+BolaDinamica "1" *-- "1" Mundo 
+Changolion "1" *-- "1" Mundo 
+Changolion "1" --|> "1" Personaje
+Changolion "1" *-- "1" RenderWindow 
+Plataforma "1" *-- "1" Mundo 
+Bandera "1" *-- "1" Mundo 
+Bandera "1" *-- "1" RenderWindow 
+
+Changolion "1" o-- "*" BolaDinamica
+Juego "1" o-- "*" Plataforma 
+Juego "1" o-- "*" BolaDinamica
+Juego "1" o-- "1" Changolion 
+Juego "1" o-- "1" Bandera 
+Juego "1" *-- "1" Musica
+
+@enduml
