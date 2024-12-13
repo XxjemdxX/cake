@@ -5,30 +5,29 @@
 class Changolion {
 public:
     Changolion(b2World& world, sf::Vector2f position, sf::Color color)
-    : radius(0.5f), density(1.0f), friction(0.3f), color(color), initialPosition(position) {
-    // Crear un cuerpo dinámico para Changolion
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(position.x, position.y);
-    body = world.CreateBody(&bodyDef);
+        : radius(0.5f), density(1.0f), friction(0.3f), color(color), initialPosition(position) {
+        // Crear un cuerpo dinámico para Changolion
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_dynamicBody;
+        bodyDef.position.Set(position.x, position.y);
+        body = world.CreateBody(&bodyDef);
 
-    b2CircleShape shape;
-    shape.m_radius = radius;
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shape;
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    body->CreateFixture(&fixtureDef);
+        b2CircleShape shape;
+        shape.m_radius = radius;
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = density;
+        fixtureDef.friction = friction;
+        body->CreateFixture(&fixtureDef);
 
-    if (!texture.loadFromFile("assets/images/chango.png")) {
-        throw std::runtime_error("No se pudo cargar la textura chango.png");
+        if (!texture.loadFromFile("assets/images/chango.png")) {
+            throw std::runtime_error("No se pudo cargar la textura chango.png");
+        }
+
+        sprite.setTexture(texture);
+        sprite.setPosition(position);
+        sprite.setOrigin(radius, radius);
     }
-
-    sprite.setTexture(texture);
-    sprite.setPosition(position);
-    // Establecer el origen del sprite al centro de la imagen
-    sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f);
-}
 
     void applyForce(const b2Vec2& force) {
         body->ApplyForceToCenter(force, true);
